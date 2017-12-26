@@ -2,13 +2,12 @@
 const program = require('commander');
 const PomeloClient = require('../pomelo-client');
 const console = require('console');
-// const _ = require('lodash');
 
 program
-  .version('0.0.1')
+  .version('0.0.2')
   .usage('pomelo-client')
   .option('-H --host <host>', 'host', '127.0.0.1')
-  .option('-p --port <port>', 'port', 3250)
+  .option('-p --port <port>', 'port', 1234)
   .option('-t --timeout <timeout>', 'request timeout', 10000);
 
 program
@@ -19,12 +18,14 @@ program
     console.log(`connect to ws://${program.host}:${program.port}`);
     (async () => {
       const client = new PomeloClient();
-      await client.init({
-        host: program.host,
-        port: program.port,
-      });
+      await client.init(
+        {
+          host: program.host,
+          port: program.port,
+        },
+        program.timeout,
+      );
 
-      // if (_.isString(program.timeout)) program.timeout = +program.timeout;
       const resp = await client.request(route, msg, program.timeout);
       console.log(resp);
 
