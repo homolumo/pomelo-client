@@ -1,12 +1,17 @@
 # pomelo-client
-pomelo client on node <br/>
+pomelo client on node for es-next
 support on single process to create multiple pomelo client
 
-events:
-<ul>
-<li>error</li>
-<li>io-error</li>
-<li>disconnect</li>
-<li>close</li>
-<li>server push message</li>
-</ul>
+- demo
+```
+pomeloClient = new PomeloClient();
+
+await pomeloClient.init({
+    host: '127.0.0.1',
+    port: 1234,
+});
+
+const 
+const data = pomeloClient.request('')
+
+```

@@ -9,7 +9,13 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}/test/test.js"
+            "program": "${file}",
+            "args": [
+                "request",
+                "gate.gateHandler.queryEntry",
+                "-t",
+                "100"
+            ]
         },
         {
             "type": "node",

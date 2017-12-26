@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/homolumo/pomelo-client#readme",
   "dependencies": {
+    "commander": "^2.12.2",
+    "lodash": "^4.17.4",
     "pomelo-protocol": "^0.1.6",
     "ws": "^3.0.0"
   },
@@ -35,6 +37,7 @@
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "arrowParent": "always"
   }
 }

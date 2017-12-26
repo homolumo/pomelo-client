@@ -1,4 +1,4 @@
-const { setTimeout } = require('timers');
+const { setTimeout, clearTimeout } = require('timers');
 
 const events = require('events');
 const util = require('util');
@@ -214,14 +214,16 @@ class PomeloClient extends events.EventEmitter {
     };
     this.socket = socket;
 
+    let timeoutId;
     return Promise.race([
       new Promise((resolve) => {
         this.once('onInit', (res) => {
+          if (timeoutId) clearTimeout(timeoutId);
           resolve(res);
         });
       }),
       new Promise((resolve, error) => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           error(new Error('timeout'));
         }, timeout);
       }),
@@ -244,14 +246,16 @@ class PomeloClient extends events.EventEmitter {
     this.requestId += 1;
     this.sendMessage(this.requestId, route, msg);
     this.requestRoutes[this.requestId] = route;
+    let timeoutId;
     return Promise.race([
       new Promise((resolve) => {
         this.requestRouteCallbacks[this.requestId] = (data) => {
+          if (timeoutId) clearTimeout(timeoutId);
           resolve(data);
         };
       }),
       new Promise((resolve, error) => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           delete this.requestRouteCallbacks[this.requestId];
           const err = new Error('timeout');
           err.msg = msg;
