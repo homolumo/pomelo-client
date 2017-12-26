@@ -4,24 +4,37 @@
   "description": "pomelo-client for node",
   "main": "pomelo-client.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava --color --verbose"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elancom/pomelo-client.git"
+    "url": "git+https://github.com/homolumo/pomelo-client.git"
   },
   "keywords": [
     "pomelo",
     "client"
   ],
   "author": "lzx",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elancom/pomelo-client/issues"
+    "url": "https://github.com/homolumo/pomelo-client/issues"
   },
-  "homepage": "https://github.com/elancom/pomelo-client#readme",
+  "homepage": "https://github.com/homolumo/pomelo-client#readme",
   "dependencies": {
-    "pomelo-protocol": "0.1.6",
-    "ws": "3.0.0"
+    "pomelo-protocol": "^0.1.6",
+    "ws": "^3.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.24.0",
+    "eslint": "^4.13.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }

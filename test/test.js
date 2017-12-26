@@ -1,45 +1,45 @@
-var PomeloClient = require('../pomelo-client');
+const PomeloClient = require('../pomelo-client');
+const ava = require('ava');
 
-function test() {
-  var params = {
-    host: '127.0.0.1',
-    port: 1088
-  };
+const params = {
+  host: '127.0.0.1',
+  port: 3250,
+};
 
-  var pomeloClient = new PomeloClient();
-  pomeloClient.on('disconnect', function (event) {
-    if (event.code == 1000) {
-      console.log('normal close by owner');
-    }
-    else {
-      console.log('network disconnect');
-      setTimeout(function () {
-        pomeloClient.init(params, connect);
-      }, 1000);
+let pomeloClient;
+
+ava.before(() => {
+  pomeloClient = new PomeloClient();
+});
+
+ava('test', async (t) => {
+  pomeloClient.on('disconnect', (event) => {
+    if (event.code === 1000) {
+      t.log('normal close by owner');
+    } else {
+      t.log('network disconnect');
     }
   });
-  pomeloClient.on('close', function () {
-    console.log('closed');
+
+  pomeloClient.on('close', () => {
+    t.log('closed');
   });
-  var connect = function () {
-    pomeloClient.request('gate.gateHandler.entry', function (data) {
-      console.log('entry gate data: ', data);
-      if (data.code != 200) {
-        console.log('fail and reconnect');
-        setTimeout(function () {
-          pomeloClient.init(params, connect);
-        }, 1000);
-        return;
-      }
-      console.log('connector info:', data);
-      pomeloClient.init({
-        host: data.ip,
-        port: data.port
-      }, function () {
-        console.log('connect connector ok');
-      });
-    });
-  };
-  pomeloClient.init(params, connect);
-}
-test();
+
+  await pomeloClient.init(params);
+
+  const resp = await pomeloClient.request('gate.gateHandler.queryEntry');
+
+  t.log(`entry gate data: ${JSON.stringify(resp)}`);
+  if (resp.code !== 0) {
+    t.log('fail and reconnect');
+    t.fail();
+  }
+
+  await pomeloClient.init(resp.data);
+  t.log('connect connector ok');
+  t.pass();
+});
+
+ava.after(() => {
+  pomeloClient.close();
+});
