@@ -6,6 +6,9 @@
   "scripts": {
     "test": "ava --color --verbose"
   },
+  "bin": {
+    "pomelo-client": "bin/app.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/homolumo/pomelo-client.git"
@@ -21,7 +24,6 @@
   "homepage": "https://github.com/homolumo/pomelo-client#readme",
   "dependencies": {
     "commander": "^2.12.2",
-    "lodash": "^4.17.4",
     "pomelo-protocol": "^0.1.6",
     "ws": "^3.0.0"
   },
